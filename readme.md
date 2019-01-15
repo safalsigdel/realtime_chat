@@ -20,7 +20,7 @@
 <p>Set the broadcast driver in .env file to 'pusher'</p>
 <p>Finally fill the credentials of pusher in .env file ( credentials can be found at the pusher dashboard ) </p>
 
-<p>Now run php artisan serve command</p>
+<p>Now run 'php artisan serve' command</p>
 <p>Enjoy live chat :)</p>
   
 </body>
