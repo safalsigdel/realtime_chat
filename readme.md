@@ -14,6 +14,9 @@
 <li>php artisan migrate</li>
 <li>php artisan serve</li>
 </ol>
+
+<h4>Requirement</h4>
+<p>This application uses <span><a href="https://pusher.com">Pusher</a></span> for realtime functionality</p>
   
 </body>
 </html>

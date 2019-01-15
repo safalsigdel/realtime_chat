@@ -31,8 +31,8 @@
                 <div class="activity">
                     <p><u>Activity</u></p>
                     <p>Total Message Sent : {{App\Message::where('user_id',auth()->user()->id)->count('message')}}</p>
-                    <p>Last Message : <?php $lastMsg =App\Message::where(['user_id'=>auth()->user()->id])->pluck('message'); echo $lastMsg[intval(count($lastMsg))-1]; ?> </p>
-                    <p>Last Login: {{session('userLoggedIn')}}</p>
+                    <p>Last Message : <?php $lastMsg =App\Message::where(['user_id'=>auth()->user()->id])->pluck('message');if($lastMsg!='[]'){ echo $lastMsg[intval(count($lastMsg))-1];} ?> </p>
+                    <p><?php if(session('userLoggedIn')!=''){echo 'Last Login : '.session('userLoggedIn');} ?></p>
                 </div>
             </div>
         </div>
