@@ -10,7 +10,7 @@
 <p>composer install</p>
 <p>cp .env.example .env</p>
 <p>php artisan key:generate</p>
-<p>Now open `.env` file and make necessary changes to the DB section (enter you database name,username and password)</p>
+<p>Now open `.env` file and make necessary changes to the DB section ( enter you database name,username and password )</p>
 <p>php artisan migrate</p>
 
 <h4>Requirement</h4>
@@ -22,6 +22,8 @@
 
 <p>Now run 'php artisan serve' command</p>
 <p>Enjoy live chat :)</p>
+<p>Take a look</p>
+<img src="public/chat.png" alt="chat">
   
 </body>
 </html>
