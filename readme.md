@@ -2,7 +2,7 @@
 <html>
 <body>
 <h1>realtime_chat</h1>
-<p>A laravel chat application build using vue.js and realtime technology
+<p>A laravel chat application build using vue.js and realtime technology.You can modify the application as per you needs.
 </p>
 <h3> Instructions</h3>
 <p>git clone this repository and cd inside the project root, then enter the following commands:</p>
