@@ -23,7 +23,7 @@
 <p>Now run 'php artisan serve' command</p>
 <p>Enjoy live chat :)</p>
 <p>Take a look</p>
-<img src="public/chat.png" alt="chat">
+<img src="public/images/chat.png" alt="chat">
   
 </body>
 </html>
