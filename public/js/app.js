@@ -1759,7 +1759,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['messages']
+  props: ['messages', 'uid'],
+  methods: {
+    getColor: function getColor(uid, messagedUserId) {
+      if (uid != messagedUserId) {
+        return 'alert alert-success';
+      }
+
+      return 'alert alert-info';
+    }
+  }
 });
 
 /***/ }),
@@ -47289,7 +47298,7 @@ var render = function() {
     { staticClass: "chat" },
     _vm._l(_vm.messages, function(message) {
       return _c("li", { staticClass: "left clearfix" }, [
-        _c("div", { staticClass: "chat-body clearfix" }, [
+        _c("div", { class: _vm.getColor(_vm.uid, message.user.id) }, [
           _c("div", { staticClass: "header" }, [
             _c("strong", { staticClass: "primary-font" }, [
               _vm._v(

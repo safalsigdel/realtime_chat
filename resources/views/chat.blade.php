@@ -10,7 +10,7 @@
                 <div class="panel-heading">Chats</div>
 
                 <div class="panel-body" id="panelBody">
-                    <chat-messages :messages="messages"></chat-messages>
+                    <chat-messages :uid="{{auth()->user()->id}}" :messages="messages"></chat-messages>
                 </div>
                 <div class="panel-footer">
                     <chat-form
