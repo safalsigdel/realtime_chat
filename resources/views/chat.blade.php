@@ -9,7 +9,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Chats</div>
 
-                <div class="panel-body">
+                <div class="panel-body" id="panelBody">
                     <chat-messages :messages="messages"></chat-messages>
                 </div>
                 <div class="panel-footer">
@@ -39,3 +39,8 @@
     </div>
 </div>
 @endsection
+<script>
+    function scrolled() {
+        alert('hello');
+    }
+</script>

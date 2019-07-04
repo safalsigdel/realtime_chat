@@ -59498,7 +59498,7 @@ var app = new Vue({
 
     this.fetchMessages();
     Echo["private"]('chat').listen('MessageSent', function (e) {
-      _this.messages.push({
+      _this.messages.unshift({
         message: e.message.message,
         user: e.user
       });
@@ -59513,7 +59513,7 @@ var app = new Vue({
       });
     },
     addMessage: function addMessage(message) {
-      this.messages.push(message);
+      this.messages.unshift(message);
       axios.post('/messages', message).then(function (response) {
         console.log(response.data);
       });
