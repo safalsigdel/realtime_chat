@@ -30,7 +30,8 @@
                 </div>
                 <div class="activity">
                     <p><u>Activity</u></p>
-                    <p>Total Message Sent : {{App\Message::where('user_id',auth()->user()->id)->count('message')}}</p>
+{{--                    <p>Total Message Sent : {{App\Message::where('user_id',auth()->user()->id)->count('message')}}</p>--}}
+                    <message-count :totalMessage="{{App\Message::where('user_id',auth()->user()->id)->count('message')}}"></message-count>
                     <p>Last Message : <?php $lastMsg =App\Message::where(['user_id'=>auth()->user()->id])->pluck('message');if($lastMsg!='[]'){ echo $lastMsg[intval(count($lastMsg))-1];} ?> </p>
                     <p><?php if(session('userLoggedIn')!=''){echo 'Last Login : '.session('userLoggedIn');} ?></p>
                 </div>
