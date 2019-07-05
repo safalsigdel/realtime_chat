@@ -25,13 +25,20 @@
 
         methods: {
             sendMessage() {
-                this.$emit('messagesent', {
-                    user: this.user,
-                    message: this.newMessage
-                });
+                if (!this.isEmptyOrSpaces(this.newMessage)) {
+                    this.$emit('messagesent', {
+                        user: this.user,
+                        message: this.newMessage
+                    });
 
-                this.newMessage = ''
+                    this.newMessage = ''
+                }
+            },
+
+            isEmptyOrSpaces(str){
+
+                return str === null || str.match(/^ *$/) !== null;
             }
-        }    
+        },
     }
 </script>

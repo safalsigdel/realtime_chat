@@ -1721,11 +1721,16 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     sendMessage: function sendMessage() {
-      this.$emit('messagesent', {
-        user: this.user,
-        message: this.newMessage
-      });
-      this.newMessage = '';
+      if (!this.isEmptyOrSpaces(this.newMessage)) {
+        this.$emit('messagesent', {
+          user: this.user,
+          message: this.newMessage
+        });
+        this.newMessage = '';
+      }
+    },
+    isEmptyOrSpaces: function isEmptyOrSpaces(str) {
+      return str === null || str.match(/^ *$/) !== null;
     }
   }
 });
