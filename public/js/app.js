@@ -1778,8 +1778,31 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['messages', 'uid'],
+  data: function data() {
+    return {
+      showLess: true,
+      buttonName: 'Show More'
+    };
+  },
   methods: {
     getColor: function getColor(uid, messagedUserId) {
       if (uid != messagedUserId) {
@@ -1787,6 +1810,15 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       return 'alert alert-info';
+    },
+    controlData: function controlData() {
+      if (this.showLess) {
+        this.buttonName = 'Show Less';
+        this.showLess = false;
+      } else if (!this.showLess) {
+        this.buttonName = 'Show More';
+        this.showLess = true;
+      }
     }
   }
 });
@@ -47351,32 +47383,77 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "ul",
-    { staticClass: "chat" },
-    _vm._l(_vm.messages, function(message) {
-      return _c("li", { staticClass: "left clearfix" }, [
-        _c("div", { class: _vm.getColor(_vm.uid, message.user.id) }, [
-          _c("div", { staticClass: "header" }, [
-            _c("strong", { staticClass: "primary-font" }, [
-              _vm._v(
-                "\n                    " +
-                  _vm._s(message.user.name) +
-                  "\n                "
-              )
+  return _c("ul", { staticClass: "chat" }, [
+    _vm.showLess
+      ? _c(
+          "div",
+          _vm._l(_vm.messages.slice(0, 5), function(message) {
+            return _c("li", { staticClass: "left clearfix" }, [
+              _c("div", { class: _vm.getColor(_vm.uid, message.user.id) }, [
+                _c("div", { staticClass: "header" }, [
+                  _c("strong", { staticClass: "primary-font" }, [
+                    _vm._v(
+                      "\n                    " +
+                        _vm._s(message.user.name) +
+                        "\n                "
+                    )
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("p", [
+                  _vm._v(
+                    "\n                " +
+                      _vm._s(message.message) +
+                      "\n            "
+                  )
+                ])
+              ])
             ])
-          ]),
-          _vm._v(" "),
-          _c("p", [
-            _vm._v(
-              "\n                " + _vm._s(message.message) + "\n            "
-            )
-          ])
-        ])
-      ])
-    }),
-    0
-  )
+          }),
+          0
+        )
+      : _c(
+          "div",
+          _vm._l(_vm.messages, function(message) {
+            return _c("li", { staticClass: "left clearfix" }, [
+              _c("div", { class: _vm.getColor(_vm.uid, message.user.id) }, [
+                _c("div", { staticClass: "header" }, [
+                  _c("strong", { staticClass: "primary-font" }, [
+                    _vm._v(
+                      "\n                    " +
+                        _vm._s(message.user.name) +
+                        "\n                "
+                    )
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("p", [
+                  _vm._v(
+                    "\n                " +
+                      _vm._s(message.message) +
+                      "\n            "
+                  )
+                ])
+              ])
+            ])
+          }),
+          0
+        ),
+    _vm._v(" "),
+    _c(
+      "button",
+      {
+        staticClass: "btn btn-primary",
+        on: {
+          click: function($event) {
+            $event.preventDefault()
+            return _vm.controlData($event)
+          }
+        }
+      },
+      [_vm._v(" " + _vm._s(_vm.buttonName))]
+    )
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
