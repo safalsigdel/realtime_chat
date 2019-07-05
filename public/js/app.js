@@ -1697,6 +1697,7 @@ module.exports = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../store */ "./resources/js/store.js");
 //
 //
 //
@@ -1712,6 +1713,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['user'],
   data: function data() {
@@ -1727,11 +1729,24 @@ __webpack_require__.r(__webpack_exports__);
           message: this.newMessage
         });
         this.newMessage = '';
+        axios.get('/count-message').then(function (response) {
+          _store__WEBPACK_IMPORTED_MODULE_0__["default"].commit('setMessageCount', response.data);
+          localStorage.setItem('initialCount', response.data);
+        })["catch"](function (error) {
+          console.log(error);
+        });
       }
     },
     isEmptyOrSpaces: function isEmptyOrSpaces(str) {
       return str === null || str.match(/^ *$/) !== null;
     }
+  },
+  created: function created() {
+    axios.get('/count-message').then(function (response) {
+      localStorage.setItem('initialCount', response.data);
+    })["catch"](function (error) {
+      console.log(error);
+    });
   }
 });
 
@@ -1787,25 +1802,31 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
+/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../store */ "./resources/js/store.js");
 //
 //
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['totalmessage'],
-  data: function data() {
-    return {
-      messageCount: this.$props.totalmessage
-    };
+  computed: {
+    messageCount: function messageCount() {
+      return this.getMessageCount();
+    }
   },
-  created: function created() {// this.messageCount =
+  created: function created() {// this.setMessageCountOnStore();
+    // this.messageCount = 0;
+    // console.log(this.$store.commit.setMessageCount(10));
+    // axios.get('')
   },
-  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapMutations"])(['setMessageCount']))
+  methods: {
+    setMessageCountOnStore: function setMessageCountOnStore() {
+      _store__WEBPACK_IMPORTED_MODULE_0__["default"].commit('setMessageCount', this.$props.totalmessage);
+    },
+    getMessageCount: function getMessageCount() {
+      return _store__WEBPACK_IMPORTED_MODULE_0__["default"].getters.getMessageCount;
+    }
+  }
 });
 
 /***/ }),
@@ -60897,6 +60918,42 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_MessageCount_vue_vue_type_template_id_ff72459a___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
+
+/***/ }),
+
+/***/ "./resources/js/store.js":
+/*!*******************************!*\
+  !*** ./resources/js/store.js ***!
+  \*******************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+
+
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__["default"]); // let count = "<?php echo App\\Message::where('user_id',auth()->user()->id)->count('message'); ?>"
+// var count = <?php echo json_encode(App\\Message::where('user_id',auth()->user()->id)); ?>;
+// let count = 23;
+
+/* harmony default export */ __webpack_exports__["default"] = (new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
+  state: {
+    messageCount: localStorage.getItem('initialCount')
+  },
+  getters: {
+    getMessageCount: function getMessageCount(state) {
+      return state.messageCount;
+    }
+  },
+  mutations: {
+    setMessageCount: function setMessageCount(state, value) {
+      state.messageCount = value;
+    }
+  }
+}));
 
 /***/ }),
 

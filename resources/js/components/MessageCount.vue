@@ -2,21 +2,30 @@
     <p>Total Message Sent : {{messageCount}}</p>
 </template>
 <script>
-    import {mapMutations} from 'vuex';
+    import store from '../store';
     export default {
         props: ['totalmessage'],
-        data(){
-            return {
-                messageCount: this.$props.totalmessage
+
+        computed: {
+            messageCount: function() {
+              return this.getMessageCount();
             }
         },
         created() {
-            // this.messageCount =
+            // this.setMessageCountOnStore();
+            // this.messageCount = 0;
+            // console.log(this.$store.commit.setMessageCount(10));
+            // axios.get('')
         },
         methods:{
-            ...mapMutations([
-                'setMessageCount'
-            ])
-        }
+            setMessageCountOnStore(){
+                store.commit('setMessageCount',this.$props.totalmessage);
+            },
+
+            getMessageCount(){
+                return store.getters.getMessageCount;
+            }
+
+        },
     }
 </script>

@@ -14,6 +14,7 @@
 </template>
 
 <script>
+    import store from '../store';
     export default {
         props: ['user'],
 
@@ -32,13 +33,26 @@
                     });
 
                     this.newMessage = ''
+                    axios.get('/count-message').then((response)=>{
+                        store.commit('setMessageCount',response.data);
+                        localStorage.setItem('initialCount',response.data);
+                    }).catch((error)=>{
+                        console.log(error);
+                    })
                 }
             },
 
             isEmptyOrSpaces(str){
 
                 return str === null || str.match(/^ *$/) !== null;
-            }
+            },
         },
+        created(){
+            axios.get('/count-message').then((response)=>{
+                        localStorage.setItem('initialCount',response.data);
+                    }).catch((error)=>{
+                        console.log(error);
+                    });
+        }
     }
 </script>

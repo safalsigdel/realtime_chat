@@ -32,4 +32,10 @@ class ChatController extends Controller
     	broadcast(new MessageSent($user,$message))->toOthers();
     	return ['status'=>'Message Sent !'];
     }
+
+    public function getTotalMessage(){
+
+        return Message::where('user_id',auth()->user()->id)->count('message');
+
+    }
 }
