@@ -1735,6 +1735,11 @@ __webpack_require__.r(__webpack_exports__);
         })["catch"](function (error) {
           console.log(error);
         });
+        axios.get('/get-current-user').then(function (response) {
+          localStorage.setItem('currentUserId', response.data);
+        })["catch"](function (error) {
+          console.log(error);
+        });
       }
     },
     isEmptyOrSpaces: function isEmptyOrSpaces(str) {
@@ -60713,18 +60718,20 @@ var app = new Vue({
         return;
       }
 
-      Notification.requestPermission(function (permission) {
-        var notification = new Notification('New post alert!', {
-          body: e.message.message,
-          // content for the alert
-          icon: "https://pusher.com/static_logos/320x320.png" // optional image url
+      if (e.user.id != localStorage.getItem('userId')) {
+        Notification.requestPermission(function (permission) {
+          var notification = new Notification(e.user.name + ' sent a message', {
+            body: e.message.message,
+            // content for the alert
+            icon: "https://pusher.com/static_logos/320x320.png" // optional image url
 
-        }); // link to page on clicking the notification
+          }); // link to page on clicking the notification
 
-        notification.onclick = function () {
-          window.open(window.location.href);
-        };
-      });
+          notification.onclick = function () {
+            window.open(window.location.href);
+          };
+        });
+      }
     });
   },
   methods: {

@@ -38,4 +38,9 @@ class ChatController extends Controller
         return Message::where('user_id',auth()->user()->id)->count('message');
 
     }
+
+    public function getCurrentUser ()
+    {
+        return auth()->user()->id;
+    }
 }

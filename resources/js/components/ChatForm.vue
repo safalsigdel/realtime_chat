@@ -38,6 +38,12 @@
                         localStorage.setItem('initialCount',response.data);
                     }).catch((error)=>{
                         console.log(error);
+                    });
+
+                    axios.get('/get-current-user').then((response)=>{
+                        localStorage.setItem('currentUserId',response.data);
+                    }).catch((error)=>{
+                        console.log(error);
                     })
                 }
             },

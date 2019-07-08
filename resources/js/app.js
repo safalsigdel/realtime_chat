@@ -58,8 +58,9 @@ const app = new Vue({
                       return;
                   }
 
-                  Notification.requestPermission( permission => {
-                      let notification = new Notification('New post alert!', {
+                  if (e.user.id!=localStorage.getItem('userId')) {
+                      Notification.requestPermission( permission => {
+                      let notification = new Notification(e.user.name +' sent a message', {
                           body: e.message.message, // content for the alert
                           icon: "https://pusher.com/static_logos/320x320.png" // optional image url
                       });
@@ -69,6 +70,9 @@ const app = new Vue({
                           window.open(window.location.href);
                       };
                   });
+                  }
+
+                
 
 			  });
     },
