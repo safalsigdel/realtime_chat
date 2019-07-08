@@ -51,6 +51,25 @@ const app = new Vue({
 			      message: e.message.message,
 			      user: e.user
 			    });
+
+
+                  if (! ('Notification' in window)) {
+                      alert('Web Notification is not supported');
+                      return;
+                  }
+
+                  Notification.requestPermission( permission => {
+                      let notification = new Notification('New post alert!', {
+                          body: e.message.message, // content for the alert
+                          icon: "https://pusher.com/static_logos/320x320.png" // optional image url
+                      });
+
+                      // link to page on clicking the notification
+                      notification.onclick = () => {
+                          window.open(window.location.href);
+                      };
+                  });
+
 			  });
     },
 
