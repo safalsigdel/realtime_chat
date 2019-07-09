@@ -1713,12 +1713,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['user'],
   data: function data() {
     return {
-      newMessage: ''
+      newMessage: '',
+      imageUpload: ''
     };
   },
   methods: {
@@ -1741,6 +1745,40 @@ __webpack_require__.r(__webpack_exports__);
           console.log(error);
         });
       }
+
+      if (!this.isEmptyOrSpaces(this.imageUpload)) {
+        this.$emit('messagesent', {
+          user: this.user,
+          message: this.imageUpload
+        });
+        this.imageUpload = ' ';
+        axios.get('/count-message').then(function (response) {
+          _store__WEBPACK_IMPORTED_MODULE_0__["default"].commit('setMessageCount', response.data);
+          localStorage.setItem('initialCount', response.data);
+        })["catch"](function (error) {
+          console.log(error);
+        });
+        axios.get('/get-current-user').then(function (response) {
+          localStorage.setItem('currentUserId', response.data);
+        })["catch"](function (error) {
+          console.log(error);
+        });
+      }
+    },
+    imageChange: function imageChange(e) {
+      var files = e.target.files || e.dataTransfer.files;
+      if (!files.length) return;
+      this.createImage(files[0]);
+    },
+    createImage: function createImage(file) {
+      var reader = new FileReader();
+      var vm = this;
+
+      reader.onload = function (e) {
+        vm.imageUpload = e.target.result;
+      };
+
+      reader.readAsDataURL(file);
     },
     isEmptyOrSpaces: function isEmptyOrSpaces(str) {
       return str === null || str.match(/^ *$/) !== null;
@@ -1800,6 +1838,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['messages', 'uid'],
   data: function data() {
@@ -1823,6 +1873,13 @@ __webpack_require__.r(__webpack_exports__);
       } else if (!this.showLess) {
         this.buttonName = 'Show More';
         this.showLess = true;
+      }
+    },
+    getPhoto: function getPhoto(message) {
+      if (message.indexOf('.jpeg') > 0 || message.indexOf('.png') > 0 || message.indexOf('.jpg') > 0) {
+        return true;
+      } else {
+        return false;
       }
     }
   }
@@ -47344,6 +47401,24 @@ var render = function() {
       }
     }),
     _vm._v(" "),
+    _c("input", {
+      staticClass: "form-control input-sm",
+      staticStyle: { "margin-top": "12px" },
+      attrs: { id: "btn-input2", type: "file", accept: ".jpeg,.png,.jpg" },
+      on: {
+        keyup: function($event) {
+          if (
+            !$event.type.indexOf("key") &&
+            _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+          ) {
+            return null
+          }
+          return _vm.sendMessage($event)
+        },
+        change: _vm.imageChange
+      }
+    }),
+    _vm._v(" "),
     _c("div", [_vm._v(" ")]),
     _vm._v(" "),
     _c(
@@ -47405,13 +47480,25 @@ var render = function() {
                   ])
                 ]),
                 _vm._v(" "),
-                _c("p", [
-                  _vm._v(
-                    "\n                " +
-                      _vm._s(message.message) +
-                      "\n            "
-                  )
-                ])
+                _c("p"),
+                _vm.getPhoto(message.message)
+                  ? _c("div", [
+                      _c("img", {
+                        attrs: {
+                          width: "200",
+                          src: "images/" + message.message
+                        }
+                      })
+                    ])
+                  : _c("div", [
+                      _vm._v(
+                        "\n                     " +
+                          _vm._s(message.message) +
+                          "     \n                "
+                      )
+                    ]),
+                _vm._v(" "),
+                _c("p")
               ])
             ])
           }),
@@ -47432,13 +47519,25 @@ var render = function() {
                   ])
                 ]),
                 _vm._v(" "),
-                _c("p", [
-                  _vm._v(
-                    "\n                " +
-                      _vm._s(message.message) +
-                      "\n            "
-                  )
-                ])
+                _c("p"),
+                _vm.getPhoto(message.message)
+                  ? _c("div", [
+                      _c("img", {
+                        attrs: {
+                          width: "200",
+                          src: "images/" + message.message
+                        }
+                      })
+                    ])
+                  : _c("div", [
+                      _vm._v(
+                        "\n                     " +
+                          _vm._s(message.message) +
+                          "     \n                "
+                      )
+                    ]),
+                _vm._v(" "),
+                _c("p")
               ])
             ])
           }),
@@ -60743,8 +60842,11 @@ var app = new Vue({
       });
     },
     addMessage: function addMessage(message) {
-      this.messages.unshift(message);
+      var _this3 = this;
+
       axios.post('/messages', message).then(function (response) {
+        _this3.messages.unshift(response.data);
+
         console.log(response.data);
       });
     }

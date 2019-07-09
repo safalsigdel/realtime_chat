@@ -85,9 +85,9 @@ const app = new Vue({
         },
 
         addMessage(message) {
-            this.messages.unshift(message);
-
             axios.post('/messages', message).then(response => {
+
+            this.messages.unshift(response.data);
               console.log(response.data);
             });
         }

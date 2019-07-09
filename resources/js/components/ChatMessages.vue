@@ -9,7 +9,13 @@
                     </strong>
                 </div>
                 <p>
-                    {{ message.message }}
+                    <div v-if="getPhoto(message.message)">
+                        <img width="200" :src="'images/' +message.message">    
+                    </div>
+                    <div v-else>
+                         {{ message.message }}     
+                    </div>
+                    
                 </p>
             </div>
         </li>
@@ -22,8 +28,14 @@
                         {{ message.user.name }}
                     </strong>
                 </div>
-                <p>
-                    {{ message.message }}
+               <p>
+                    <div v-if="getPhoto(message.message)">
+                        <img width="200" :src="'images/' +message.message">    
+                    </div>
+                    <div v-else>
+                         {{ message.message }}     
+                    </div>
+                    
                 </p>
             </div>
         </li>
@@ -57,6 +69,13 @@
                 this.buttonName = 'Show More';
                 this.showLess = true;
             }
+        },getPhoto(message){
+
+          if(message.indexOf('.jpeg')>0||message.indexOf('.png')>0||message.indexOf('.jpg')>0){
+            return true;
+          }else{
+            return false;
+          }
         }
       }
   };
